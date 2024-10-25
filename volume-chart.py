@@ -1,12 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
-
+from utils.logo import add_logo
+import os
 
 # Define filepaths
-input_file = 'Perpetuals - Perpetual Trading Volumes_Artemis-Raw-Data.csv'
-logo_file = 'rv_lockup_sec.png'
+base_folder = 'raw-data'
+data_file = 'Perpetuals - Perpetual Trading Volumes_Artemis-Raw-Data.csv'
+input_file = os.path.join(base_folder, data_file)
 
 # Import colors
 color_palette = {'Hyperliquid':'#09b882', 'Bold Blue':'#1f1f60', 'Sky Blue':'#6f85ee', 'Engage Orange':'#eda024', 'Dark Slate':'#262935', 'Mauve':'#7c1158', 'Yellow':'#ebdc78', 'Green':'#00b7c7', 'Red':'#b30000','Mid Grey':'#54504c','Other Grey':'#a4a2a8'}
@@ -80,11 +81,8 @@ def plot_perpetual_volumes(file_path):
     # Rotate x-axis labels for better readability
     plt.xticks(rotation=45)
     
-    # Add logo
-    logo = plt.imread(logo_file)
-    imagebox = OffsetImage(logo, zoom=0.1)
-    ab = AnnotationBbox(imagebox, (0.075,-0.15),xycoords='axes fraction', frameon=False)
-    ax.add_artist(ab)
+    # Add logo without specifying a path (default will be used)
+    add_logo(ax)
     
     # Add sources and note
     other_platforms_alphabetized = sorted(other_columns)
